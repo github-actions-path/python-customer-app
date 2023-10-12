@@ -11,6 +11,7 @@ env:
   FLASK_APP: app.py
   FLASK_ENV: development
   ARTIFACT_NAME: customer-app
+  WORKSPACE_ENVIRONMENT_VARIABLE: 'custom workspace environment variable for all jobs'
 
 jobs:
     build:
@@ -67,3 +68,21 @@ jobs:
           with:
               name: ${{ env.ARTIFACT_NAME }}
               path: ${{ github.workspace }}
+    windows:
+      env:
+        JOB_ENVIRONMENT_VARIABLE: 'custom job environment variable for windows'
+      runs-on: windows-latest
+      steps:
+        - name: Print custom environment variables from windows-latest
+          env:
+            STEP_ENVIRONMENT_VARIABLE: 'custom step environment variable for powershell'
+          run: |
+            echo "Accessing environment variables in run command"
+            echo "$Env:WORKSPACE_ENVIRONMENT_VARIABLE"
+            echo "$Env:JOB_ENVIRONMENT_VARIABLE"
+            echo "$Env:STEP_ENVIRONMENT_VARIABLE"
+            echo "------------------------------------------------------"
+            echo "Accessing environment variables using env context"
+            echo "${{ env.WORKSPACE_ENVIRONMENT_VARIABLE }}"
+            echo "${{ env.JOB_ENVIRONMENT_VARIABLE }}"
+            echo "${{ env.STEP_ENVIRONMENT_VARIABLE }} Not defined"
