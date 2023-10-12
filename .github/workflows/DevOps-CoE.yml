@@ -7,6 +7,11 @@ on:
     branches: [ devops ]
   workflow_dispatch:
 
+env:
+  FLASK_APP: app.py
+  FLASK_ENV: development
+  ARTIFACT_NAME: customer-app
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -31,7 +36,9 @@ jobs:
               run: |
                   pythonPath=`which python3`
                   echo "Python Path $pythonPath"
-            #      $pythonPath app.py
+                  echo "Current Directory ${{ github.workspace }}"
+                  echo "FLASK_APP ${{ env.FLASK_APP }}"
+            #      $pythonPath ${{ github.workspace }}/${{ env.FLASK_APP }}
             - name: Get Organization Name
               run: |
                   echo ${{ github.repository_owner }}
@@ -46,3 +53,17 @@ jobs:
             - name: List files
               run: |
                   ls -la
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ${{ env.ARTIFACT_NAME }}
+                  path: .
+    deploy:
+      runs-on: syr-org-v1
+      needs: build
+      steps:
+        - name: Upload artifact
+          uses: actions/download-artifact@v2
+          with:
+              name: ${{ env.ARTIFACT_NAME }}
+              path: ${{ github.workspace }}
