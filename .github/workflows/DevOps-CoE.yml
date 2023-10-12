@@ -33,12 +33,12 @@ jobs:
             #      $pythonPath app.py
             - name:
               run: |
-                  echo ${{ github.repository }}
+                  echo ${{ github.repository_owner }}
             - name: Check out the repo
               uses: actions/checkout@v2
               with:
                   # Disabling shallow clone is recommended for improving relevancy of reporting
                   # fetch-depth: 0
-                  repository:  ${{ github.repository }}/spring-cars
+                  repository:  github-actions-path/spring-cars
                   ref: devops
                   path: .github/workflows
