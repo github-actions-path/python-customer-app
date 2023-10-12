@@ -41,7 +41,7 @@ jobs:
                   # fetch-depth: 0
                   repository:  ${{ github.repository_owner }}/spring-cars
                   ref: devops
-                  path: .github/workflows
+                  path: test.txt
             - name: List files
               run: |
                   ls -la
