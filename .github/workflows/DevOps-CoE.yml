@@ -31,7 +31,7 @@ jobs:
                   pythonPath=`which python3`
                   echo "Python Path $pythonPath"
             #      $pythonPath app.py
-            - name:
+            - name: Get Organization Name
               run: |
                   echo ${{ github.repository_owner }}
             - name: Check out the repo
@@ -39,6 +39,9 @@ jobs:
               with:
                   # Disabling shallow clone is recommended for improving relevancy of reporting
                   # fetch-depth: 0
-                  repository:  github-actions-path/spring-cars
+                  repository:  ${{ github.repository_owner }}/spring-cars
                   ref: devops
                   path: .github/workflows
+            - name: List files
+              run: |
+                  ls -la
