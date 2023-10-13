@@ -55,7 +55,7 @@ jobs:
               run: |
                   ls -la
             - name: Upload artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v2
               with:
                   name: ${{ env.ARTIFACT_NAME }}
                   path: .
@@ -87,17 +87,19 @@ jobs:
             echo "${{ env.JOB_ENVIRONMENT_VARIABLE }}"
             echo "${{ env.STEP_ENVIRONMENT_VARIABLE }} Not defined"
 
-    commit-and-push:
-      runs-on: syr-org-v1
-      needs: build
-      steps:
-        - name: "Checkout"
-          uses: actions/checkout@v2
-        - name: "Commit and push changes"
-          run: |
-            date > generated.txt
-            git config user.name Syr7-s
-            git config user.email isa.sayar1725@gmail.com
-            git add .
-            git commit -m "generated"
-            git push
+    #commit-and-push:
+    #  runs-on: syr-org-v1
+    #  needs: build
+    #  steps:
+    #    - name: "Checkout"
+    #      uses: actions/checkout@v2
+    #    - name: "Commit and push changes"
+    #    #  env:
+    #    #    ACCESS_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
+    #      run: |
+    #        date > generated.txt
+    #        git config user.name Syr7-s
+    #        git config user.email isa.sayar1725@gmail.com
+    #        git add .
+    #        git commit -m "generated"
+    #        git push
